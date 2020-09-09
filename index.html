@@ -121,9 +121,9 @@
             var radius = e.accuracy;
             console.log('Location found: ' + e.latlng)
             if (!usermarker) {
-             usermarker = L.circle(e.latlng, radius).addTo(map).bindPopup("You are within " + radius + " meters from this point").openPopup();
+             usermarker = L.circle(e.latlng, radius).addTo(map).bindPopup("You are within " + radius + " meters from this point");
             } else {
-              usermarker.setLatLng(e.latlng).bindPopup("You are within " + radius + " meters from this point").openPopup();
+              usermarker.setLatLng(e.latlng).bindPopup("You are within " + radius + " meters from this point");
             }
           }).on("locationerror", error => {
             console.log('Location error:');
