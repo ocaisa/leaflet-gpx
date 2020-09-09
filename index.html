@@ -112,12 +112,25 @@
           // _c('elevation-loss').textContent = gpx.to_ft(gpx.get_elevation_loss()).toFixed(0);
           // _c('elevation-net').textContent  = gpx.to_ft(gpx.get_elevation_gain()
           //   - gpx.get_elevation_loss()).toFixed(0);
-          navigator.geolocation.getCurrentPosition(function(position) {
-            var latLng = {
-                lat: position.coords.latitude,
-                lng: position.coords.longitude
-            };
-            L.marker(latLng).addTo(map);
+          var usermarker;
+
+          map.locate({
+            watch: true,
+            enableHighAccuracy: true
+          }).on("locationfound", e => {
+            console.log('Location found: ' + e.latlng)
+            if (!usermarker) {
+             usermarker = L.marker(e.latlng).addTo(map);
+            } else {
+              usermarker.setLatLng(e.latlng);
+            }
+          }).on("locationerror", error => {
+            console.log('Location error:');
+            console.log(error);
+            if (usermarker) {
+              map.removeLayer(usermarker);
+              usermarker = null;
+            }
           });
         }).addTo(map);
       }
