@@ -112,6 +112,13 @@
           // _c('elevation-loss').textContent = gpx.to_ft(gpx.get_elevation_loss()).toFixed(0);
           // _c('elevation-net').textContent  = gpx.to_ft(gpx.get_elevation_gain()
           //   - gpx.get_elevation_loss()).toFixed(0);
+          navigator.geolocation.getCurrentPosition(function(position) {
+            var latLng = {
+                lat: position.coords.latitude,
+                lng: position.coords.longitude
+            };
+            L.marker(latlng).addTo(map);
+          };
         }).addTo(map);
       }
 
