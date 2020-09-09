@@ -118,11 +118,12 @@
             watch: true,
             enableHighAccuracy: true
           }).on("locationfound", e => {
+            var radius = e.accuracy;
             console.log('Location found: ' + e.latlng)
             if (!usermarker) {
-             usermarker = L.marker(e.latlng).addTo(map);
+             usermarker = L.circle(e.latlng, radius).addTo(map).bindPopup("You are within " + radius + " meters from this point").openPopup();
             } else {
-              usermarker.setLatLng(e.latlng);
+              usermarker.setLatLng(e.latlng).bindPopup("You are within " + radius + " meters from this point").openPopup();
             }
           }).on("locationerror", error => {
             console.log('Location error:');
