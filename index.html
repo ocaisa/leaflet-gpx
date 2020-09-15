@@ -40,7 +40,7 @@
     </head>  
     <body>    <h2>Modal Example</h2>
         <!-- Trigger/Open The Modal -->
-        <button id="myBtn" onclick="display_gpx(document.getElementById('demo'))">Open Modal
+        <button id="myBtn" onclick="init_map()">Open Modal
         </button>
         <!-- The Modal -->
         <div id="myModal" class="modal">  
@@ -70,6 +70,9 @@
 <script src="gpx.js"></script>     
 <script type="application/javascript">
       var executed = false;
+      function init_map() {
+        display_gpx(document.getElementById('demo'));
+      }
       function display_gpx(elt) {
         if (executed) {
             return;
