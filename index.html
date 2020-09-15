@@ -27,69 +27,64 @@
   ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
   POSSIBILITY OF SUCH DAMAGE.
 -->
-<html>  
-    <head>    
-        <title>leaflet-gpx demo
-        </title>    
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.css" />    
-        <style type="text/css">      body { width: 800px; margin: 0 auto; }       .gpx { border: 2px #aaa solid; border-radius: 5px;         box-shadow: 0 0 3px 3px #ccc;         width: 800px; margin: 1em auto; }       .gpx header { padding: 0.5em; }       .gpx h3 { margin: 0; padding: 0; font-weight: bold; }       .gpx .start { font-size: smaller; color: #444; }       .gpx .map { border: 1px #888 solid; border-left: none; border-right: none;         width: 800px; height: 500px; margin: 0; }       .gpx footer { background: #f0f0f0; padding: 0.5em; }       .gpx ul.info { list-style: none; margin: 0; padding: 0; font-size: smaller; }       .gpx ul.info li { color: #666; padding: 2px; display: inline; }       .gpx ul.info li span { color: black; }     
-        </style>    
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <style>body {font-family: Arial, Helvetica, sans-serif;} /* The Modal (background) */.modal {   display: none; /* Hidden by default */   position: fixed; /* Stay in place */   z-index: 1; /* Sit on top */   padding-top: 100px; /* Location of the box */   left: 0;   top: 0;   width: 100%; /* Full width */   height: 100%; /* Full height */   overflow: auto; /* Enable scroll if needed */   background-color: rgb(0,0,0); /* Fallback color */   background-color: rgba(0,0,0,0.4); /* Black w/ opacity */ } /* Modal Content */.modal-content {   background-color: #fefefe;   margin: auto;   padding: 20px;   border: 1px solid #888;   width: 80%; } /* The Close Button */.close {   color: #aaaaaa;   float: right;   font-size: 28px;   font-weight: bold; }.close:hover,.close:focus {   color: #000;   text-decoration: none;   cursor: pointer; } 
-        </style>  
-    </head>  
-    <body>    <h2>Modal Example</h2>
-        <!-- Trigger/Open The Modal -->
-        <button id="myBtn" onclick="init_map()">Open Modal
-        </button>
-        <!-- The Modal -->
-        <div id="myModal" class="modal">  
-            <!-- Modal content -->  
-            <div class="modal-content">    
-                <span class="close">&times;
-                </span>    
-                <section id="demo" class="gpx" data-gpx-source="demo.gpx" data-map-target="demo-map">      
-                    <header>        <h3>Loading...</h3>      
-                    </header>      
-                    <article>        
-                        <div class="map" id="demo-map">
-                        </div>      
-                    </article>      
-                    <footer>        
-                        <ul class="info">          
-                            <li>Distance:&nbsp;
-                            <span class="distance">
-                            </span>&nbsp;km
-                            </li>        
-                        </ul>      
-                    </footer>    
-                </section>  
-            </div>
-        </div>         
-<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.js"></script>     
-<script src="gpx.js"></script>     
-<script type="application/javascript">
-      var executed = false;
-      function init_map() {
-        display_gpx(document.getElementById('demo'));
-      }
+
+<html>
+  <head>
+    <title>leaflet-gpx demo</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.css" />
+    <style type="text/css">
+      body { width: 800px; margin: 0 auto; }
+      .gpx { border: 2px #aaa solid; border-radius: 5px;
+        box-shadow: 0 0 3px 3px #ccc;
+        width: 800px; margin: 1em auto; }
+      .gpx header { padding: 0.5em; }
+      .gpx h3 { margin: 0; padding: 0; font-weight: bold; }
+      .gpx .start { font-size: smaller; color: #444; }
+      .gpx .map { border: 1px #888 solid; border-left: none; border-right: none;
+        width: 800px; height: 500px; margin: 0; }
+      .gpx footer { background: #f0f0f0; padding: 0.5em; }
+      .gpx ul.info { list-style: none; margin: 0; padding: 0; font-size: smaller; }
+      .gpx ul.info li { color: #666; padding: 2px; display: inline; }
+      .gpx ul.info li span { color: black; }
+    </style>
+  </head>
+  <body>
+    <section id="demo" class="gpx" data-gpx-source="demo.gpx" data-map-target="demo-map">
+      <header>
+        <h3>Loading...</h3>
+      </header>
+
+      <article>
+        <div class="map" id="demo-map"></div>
+      </article>
+
+      <footer>
+        <ul class="info">
+          <li>Distance:&nbsp;<span class="distance"></span>&nbsp;km</li>
+        </ul>
+      </footer>
+    </section>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.js"></script>
+    <script src="gpx.js"></script>
+    <script type="application/javascript">
       function display_gpx(elt) {
-        if (executed) {
-            return;
-        }
-        executed = true;
         if (!elt) return;
-        
+
         var url = elt.getAttribute('data-gpx-source');
         var mapid = elt.getAttribute('data-map-target');
         if (!url || !mapid) return;
+
         function _t(t) { return elt.getElementsByTagName(t)[0]; }
         function _c(c) { return elt.getElementsByClassName(c)[0]; }
+
         var map = L.map(mapid);
         L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
           attribution: 'Map data &copy; <a href="http://www.osm.org">OpenStreetMap</a>'
         }).addTo(map);
+
         var control = L.control.layers(null, null).addTo(map);
+
         new L.GPX(url, {
           async: true,
           marker_options: {
@@ -101,6 +96,7 @@
           var gpx = e.target;
           map.fitBounds(gpx.getBounds());
           control.addOverlay(gpx, gpx.get_name());
+
           /*
            * Note: the code below relies on the fact that the demo GPX file is
            * an actual GPS track with timing and heartrate information.
@@ -117,6 +113,7 @@
           // _c('elevation-net').textContent  = gpx.to_ft(gpx.get_elevation_gain()
           //   - gpx.get_elevation_loss()).toFixed(0);
           var usermarker;
+
           map.locate({
             watch: true,
             enableHighAccuracy: true
@@ -139,28 +136,8 @@
           });
         }).addTo(map);
       }
-</script> 
-<script>
-// Get the modal
-var modal = document.getElementById("myModal");
-// Get the button that opens the modal
-var btn = document.getElementById("myBtn");
-// Get the <span> element that closes the modal
-var span = document.getElementsByClassName("close")[0];
-// When the user clicks the button, open the modal 
-btn.onclick = function() {
-  modal.style.display = "block";
-}
-// When the user clicks on <span> (x), close the modal
-span.onclick = function() {
-  modal.style.display = "none";
-}
-// When the user clicks anywhere outside of the modal, close it
-window.onclick = function(event) {
-  if (event.target == modal) {
-    modal.style.display = "none";
-  }
-} 
-</script> 
-    </body>
+
+      display_gpx(document.getElementById('demo'));
+    </script>
+  </body>
 </html>
