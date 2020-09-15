@@ -40,7 +40,7 @@
     </head>  
     <body>    <h2>Modal Example</h2>
         <!-- Trigger/Open The Modal -->
-        <button id="myBtn">Open Modal
+        <button id="myBtn" onclick="display_gpx(document.getElementById('demo'))">Open Modal
         </button>
         <!-- The Modal -->
         <div id="myModal" class="modal">  
@@ -69,8 +69,14 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.js"></script>     
 <script src="gpx.js"></script>     
 <script type="application/javascript">
+      var executed = false;
       function display_gpx(elt) {
+        if (executed) {
+            return;
+        }
+        executed = true;
         if (!elt) return;
+        
         var url = elt.getAttribute('data-gpx-source');
         var mapid = elt.getAttribute('data-map-target');
         if (!url || !mapid) return;
@@ -130,7 +136,6 @@
           });
         }).addTo(map);
       }
-      display_gpx(document.getElementById('demo'));
 </script> 
 <script>
 // Get the modal
